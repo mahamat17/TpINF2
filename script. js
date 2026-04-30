@@ -1,0 +1,35 @@
+let data = JSON.parse(localStorage.getItem("survey")) || [];
+
+document.getElementById("form").addEventListener("submit", function(e){
+e.preventDefault();
+
+let entry = {
+name: document.getElementById("name").value,
+age: Number(document.getElementById("age").value),
+sex: document.getElementById("sex").value,
+filiere: document.getElementById("filiere").value
+};
+
+data.push(entry);
+
+localStorage.setItem("survey", JSON.stringify(data));
+
+alert("Données enregistrées");
+
+showStats();
+});
+
+function showStats(){
+
+let total = data.length;
+
+let avgAge = total ?
+data.reduce((a,b)=>a+b.age,0)/total : 0;
+
+document.getElementById("stats").innerHTML = `
+<p>Total: ${total}</p>
+<p>Moyenne âge: ${avgAge.toFixed(1)}</p>
+`;
+}
+
+showStats();
